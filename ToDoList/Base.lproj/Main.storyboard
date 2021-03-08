@@ -30,7 +30,14 @@
                             <outlet property="delegate" destination="tCk-x1-KsR" id="O7e-m1-WmY"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Todo" id="aAg-l4-PvB"/>
+                    <navigationItem key="navigationItem" title="Todo" id="aAg-l4-PvB">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="7yT-2d-zAb">
+                            <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            <connections>
+                                <action selector="addButtonPressed:" destination="tCk-x1-KsR" id="epE-1H-hHu"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="DmG-F9-6Ub" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -44,7 +51,7 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="BoJ-BF-JC4">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="barTintColor" systemColor="systemBlueColor"/>
+                        <color key="barTintColor" red="0.59999999999999998" green="0.73333333333333328" blue="0.67843137254901964" alpha="1" colorSpace="calibratedRGB"/>
                         <textAttributes key="titleTextAttributes">
                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </textAttributes>
@@ -62,9 +69,6 @@
     <resources>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-        <systemColor name="systemBlueColor">
-            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

@@ -2,13 +2,43 @@ import UIKit
 
 class TodoListViewController: UITableViewController {
     
-    let itemArray = ["Find Mike", "Buy Eggs", "Destroy wonderland"]
+    var itemArray = ["Find Mike", "Buy Eggs", "Destroy wonderland"]
 
     override func viewDidLoad() {
         super.viewDidLoad()
   
     }
 
+    
+    
+    @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
+        
+        var textField = UITextField()
+        
+        let alert = UIAlertController(title: "Add New ToDo Item", message: "", preferredStyle: .alert)
+        
+        
+        // The button you are going to press once you are done
+        let action = UIAlertAction(title: "Add Item", style: .default) { (action) in
+            
+            // What will happen once the user clicks the Add Item button on our UIAlert
+            self.itemArray.append(textField.text!)
+        }
+        
+        
+        alert.addTextField { (alertTextField) in
+            alertTextField.placeholder = "Create new item"
+            textField = alertTextField                      // Storing the same reference to a local variable accessible
+        }
+        
+        alert.addAction(action)
+        
+        present(alert, animated: true, completion: nil)
+        
+        
+    }
+    
+    
 
 }
 
@@ -45,7 +75,7 @@ extension TodoListViewController {
         }
         
      
-        
+
         tableView.deselectRow(at: indexPath, animated: true)    // cell 을 누르자마자 deselect 되는 애니메이션이 나올 수 있도록
         
     }
