@@ -14,6 +14,7 @@ class TodoListViewController: UITableViewController {
 
 extension TodoListViewController {
     
+    //MARK: - UITableView DataSource Methods
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return itemArray.count
@@ -29,5 +30,25 @@ extension TodoListViewController {
         return cell
     }
     
+    //MARK: - UITableView Delegate Methods
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        guard let cell = tableView.cellForRow(at: indexPath) else {
+            return
+        }
+        
+        if cell.accessoryType != .checkmark {
+            cell.accessoryType = .checkmark
+        } else {
+            cell.accessoryType = .none
+        }
+        
+     
+        
+        tableView.deselectRow(at: indexPath, animated: true)    // cell 을 누르자마자 deselect 되는 애니메이션이 나올 수 있도록
+        
+    }
+
     
 }
