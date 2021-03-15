@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		7C2F114C25FF2B1B00D5AA7C /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C2F114B25FF2B1B00D5AA7C /* Item.swift */; };
 		7CCDE72D25F607F900411532 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CCDE72C25F607F900411532 /* AppDelegate.swift */; };
 		7CCDE72F25F607F900411532 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CCDE72E25F607F900411532 /* SceneDelegate.swift */; };
 		7CCDE73125F607F900411532 /* TodoListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CCDE73025F607F900411532 /* TodoListViewController.swift */; };
@@ -18,7 +17,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		7C2F114B25FF2B1B00D5AA7C /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		7CCDE72925F607F900411532 /* ToDoList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ToDoList.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7CCDE72C25F607F900411532 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7CCDE72E25F607F900411532 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -44,7 +42,7 @@
 		7C2F114E25FF2B3800D5AA7C /* Data Model */ = {
 			isa = PBXGroup;
 			children = (
-				7C2F114B25FF2B1B00D5AA7C /* Item.swift */,
+				7CCDE73525F607F900411532 /* ToDoList.xcdatamodeld */,
 			);
 			path = "Data Model";
 			sourceTree = "<group>";
@@ -95,7 +93,6 @@
 			children = (
 				7CCDE73D25F607FB00411532 /* Info.plist */,
 				7CCDE72E25F607F900411532 /* SceneDelegate.swift */,
-				7CCDE73525F607F900411532 /* ToDoList.xcdatamodeld */,
 				7CCDE72C25F607F900411532 /* AppDelegate.swift */,
 				7C2F115025FF2B4700D5AA7C /* Controller */,
 				7C2F114F25FF2B3F00D5AA7C /* View */,
@@ -175,7 +172,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7C2F114C25FF2B1B00D5AA7C /* Item.swift in Sources */,
 				7CCDE73125F607F900411532 /* TodoListViewController.swift in Sources */,
 				7CCDE72D25F607F900411532 /* AppDelegate.swift in Sources */,
 				7CCDE72F25F607F900411532 /* SceneDelegate.swift in Sources */,
