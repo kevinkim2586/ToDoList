@@ -4,11 +4,10 @@ class TodoListViewController: UITableViewController {
     
     var itemArray = [Item]()
     
-    let defaults = UserDefaults.standard
+    let dataFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("Items.plist")
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         
         let newItem = Item()
         newItem.title = "Find Mike"
@@ -24,14 +23,12 @@ class TodoListViewController: UITableViewController {
   
         
         
-//        if let items = defaults.array(forKey: "TodoListArray") as? [String] {
+//        if let items = defaults.array(forKey: "TodoListArray") as? [Item] {
 //            itemArray = items
 //        }
-  
+//
     }
 
-    
-    
     @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
         
         var textField = UITextField()
@@ -49,26 +46,31 @@ class TodoListViewController: UITableViewController {
             
             
             self.itemArray.append(newItem)
+            self.saveItems()
             
-            
-            self.defaults.set(self.itemArray, forKey: "TodoListArray")
-            
-            self.tableView.reloadData()
         }
-        
-        
         alert.addTextField { (alertTextField) in
             alertTextField.placeholder = "Create new item"
             textField = alertTextField                      // Storing the same reference to a local variable accessible
         }
-        
         alert.addAction(action)
-        
         present(alert, animated: true, completion: nil)
         
         
     }
     
+    func saveItems() {
+        let encoder = PropertyListEncoder()
+        
+        do {
+            let data =  try encoder.encode(itemArray)
+            try data.write(to: dataFilePath!)
+        } catch {
+            print("Error encoding array \(error)")
+        }
+
+        self.tableView.reloadData()
+    }
     
 
 }
@@ -99,12 +101,11 @@ extension TodoListViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         itemArray[indexPath.row].isDone = !itemArray[indexPath.row].isDone
+        saveItems()
         
         guard let cell = tableView.cellForRow(at: indexPath) else {
             return
         }
-        
-        tableView.reloadData()
     
         tableView.deselectRow(at: indexPath, animated: true)    // cell 을 누르자마자 deselect 되는 애니메이션이 나올 수 있도록
         
