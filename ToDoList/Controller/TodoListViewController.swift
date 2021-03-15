@@ -8,25 +8,8 @@ class TodoListViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        let newItem = Item()
-        newItem.title = "Find Mike"
-        itemArray.append(newItem)
-        
-        let newItem2 = Item()
-        newItem2.title = "Buy eggs"
-        itemArray.append(newItem2)
-        
-        let newItem3 = Item()
-        newItem3.title = "Destroy"
-        itemArray.append(newItem3)
   
-        
-        
-//        if let items = defaults.array(forKey: "TodoListArray") as? [Item] {
-//            itemArray = items
-//        }
-//
+        loadItems()
     }
 
     @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
@@ -34,7 +17,6 @@ class TodoListViewController: UITableViewController {
         var textField = UITextField()
         
         let alert = UIAlertController(title: "Add New ToDo Item", message: "", preferredStyle: .alert)
-        
         
         // The button you are going to press once you are done
         let action = UIAlertAction(title: "Add Item", style: .default) { (action) in
@@ -70,6 +52,22 @@ class TodoListViewController: UITableViewController {
         }
 
         self.tableView.reloadData()
+    }
+    
+    func loadItems() {
+        
+        if let data = try? Data(contentsOf: dataFilePath!) {
+            
+            let decoder = PropertyListDecoder()
+            
+            do {
+                itemArray = try decoder.decode([Item].self, from: data)
+                
+            } catch {
+                print("error in loadItems() \(error)")
+            }
+            
+        }
     }
     
 
