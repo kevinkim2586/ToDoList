@@ -13,7 +13,7 @@ class TodoListViewController: UITableViewController {
         
         
         print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask))
-        //loadItems()
+        loadItems()
     }
 
     @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
@@ -60,9 +60,15 @@ class TodoListViewController: UITableViewController {
     
     func loadItems() {
 
-   
-        
-        
+        // going to fetch results in the form of Items that we created in the Data Model (entity)
+        // you have to specify the data type
+        // fetchRequest() requests everything back from the Persistent Container
+        let request: NSFetchRequest<Item> = Item.fetchRequest()
+        do {
+           itemArray = try context.fetch(request)
+        } catch {
+            print("Error fetching data from context \(error)")
+        }
     }
     
 
