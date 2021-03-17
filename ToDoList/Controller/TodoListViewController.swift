@@ -74,8 +74,6 @@ class TodoListViewController: UITableViewController {
         }
         tableView.reloadData()
     }
-    
-
 }
 
 extension TodoListViewController {
@@ -88,7 +86,7 @@ extension TodoListViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: "ToDoItemCell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: Constants.toDoItemCellIdentifier, for: indexPath)
         
         let item = itemArray[indexPath.row]
         
