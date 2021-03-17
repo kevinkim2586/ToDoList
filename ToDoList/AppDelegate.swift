@@ -1,12 +1,6 @@
-//
-//  AppDelegate.swift
-//  ToDoList
-//
-//  Created by Kevin Kim on 2021/03/08.
-//
-
 import UIKit
 import CoreData
+import RealmSwift
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {

@@ -10,7 +10,6 @@ class CategoryTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        
         loadCategories()
     }
     
@@ -85,7 +84,6 @@ extension CategoryTableViewController {
         cell.textLabel?.text = category.name
         
         return cell
-  
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

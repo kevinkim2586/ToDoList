@@ -38,6 +38,8 @@ class TodoListViewController: UITableViewController {
             let newItem = Item(context: self.context)
             newItem.title = textField.text!
             newItem.isDone = false
+            
+            // 별도로 parentCategory 도 설정해야함
             newItem.parentCategory = self.selectedCategory
             
             self.itemArray.append(newItem)
@@ -74,16 +76,13 @@ class TodoListViewController: UITableViewController {
         // you have to specify the data type
         // fetchRequest() requests everything back from the Persistent Container
         
-        
         let categoryPredicate = NSPredicate(format: "parentCategory.name MATCHES %@", selectedCategory!.name!)
        
-        if let additionalPredicate =  predicate {
+        if let additionalPredicate = predicate {        // 검색까지 하면~
             request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [categoryPredicate, additionalPredicate])
         } else {
             request.predicate = categoryPredicate
         }
-        
-
         
         do {
            itemArray = try context.fetch(request)
