@@ -59,12 +59,14 @@ class TodoListViewController: UITableViewController {
         self.tableView.reloadData()
     }
     
-    func loadItems() {
+    
+    // Providing a default value for request if we don't pass a separate parameter
+    func loadItems(with request: NSFetchRequest<Item> = Item.fetchRequest()) {
 
         // going to fetch results in the form of Items that we created in the Data Model (entity)
         // you have to specify the data type
         // fetchRequest() requests everything back from the Persistent Container
-        let request: NSFetchRequest<Item> = Item.fetchRequest()
+        
         do {
            itemArray = try context.fetch(request)
         } catch {
@@ -123,20 +125,25 @@ extension TodoListViewController: UISearchBarDelegate {
          
         request.predicate = NSPredicate(format: "title CONTAINS[cd] %@", searchBar.text!)
         
-        let sortDescriptor = NSSortDescriptor(key: "title", ascending: true)
-        
         // Why array? because .sortDescriptor"s" -> plural -> expects an array
-        request.sortDescriptors = [sortDescriptor]
-
+        request.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true)]
+       
+        loadItems(with: request)
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         
-        do {
-           itemArray = try context.fetch(request)
-        } catch {
-            print("Error fetching data from context \(error)")
+        if searchBar.text?.count == 0 {
+            loadItems()
+            
+            DispatchQueue.main.async {
+                searchBar.resignFirstResponder()
+            }
+            
         }
-        tableView.reloadData()
-
-
+        
+        
+        
     }
     
     
