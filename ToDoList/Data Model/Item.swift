@@ -1,8 +1,10 @@
 import Foundation
+import RealmSwift
 
-class Item: Codable {
+class Item: Object {
     
-    var title: String = ""
-    var isDone: Bool = false
+    @objc dynamic var title: String = ""
+    @objc dynamic var isDone: Bool = false
     
+    var parentCategory = LinkingObjects(fromType: Category.self, property: "items")
 }

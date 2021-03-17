@@ -1,7 +1,10 @@
 import UIKit
 import CoreData
+import RealmSwift
 
 class CategoryTableViewController: UITableViewController {
+    
+    let realm = try! Realm()
 
     var categories = [Category]()
     
