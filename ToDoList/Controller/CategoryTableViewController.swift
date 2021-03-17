@@ -3,7 +3,7 @@ import CoreData
 
 class CategoryTableViewController: UITableViewController {
 
-    var categoryArray = [Category]()
+    var categories = [Category]()
     
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
@@ -27,7 +27,7 @@ class CategoryTableViewController: UITableViewController {
             let newCategory = Category(context: self.context)
             newCategory.name = textField.text!
             
-            self.categoryArray.append(newCategory)
+            self.categories.append(newCategory)
             
             
             self.saveCategory()
@@ -66,7 +66,7 @@ extension CategoryTableViewController {
         let request: NSFetchRequest<Category> = Category.fetchRequest()
         
         do {
-            categoryArray = try context.fetch(request)
+            categories = try context.fetch(request)
         } catch {
             print("Error fetching category data : \(error)")
         }
@@ -80,14 +80,14 @@ extension CategoryTableViewController {
 extension CategoryTableViewController {
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return categoryArray.count
+        return categories.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: Constants.categoryCellIdentifier, for: indexPath)
     
-        let category = categoryArray[indexPath.row]
+        let category = categories[indexPath.row]
         
         cell.textLabel?.text = category.name
         
