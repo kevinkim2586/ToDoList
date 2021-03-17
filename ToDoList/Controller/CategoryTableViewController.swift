@@ -28,10 +28,7 @@ class CategoryTableViewController: UITableViewController {
             newCategory.name = textField.text!
             
             self.categories.append(newCategory)
-            
-            
             self.saveCategory()
-            
         }
         alert.addTextField { (alertTextField) in
             alertTextField.placeholder = "Category Name"
@@ -39,10 +36,7 @@ class CategoryTableViewController: UITableViewController {
         }
         alert.addAction(action)
         present(alert, animated: true, completion: nil)
-
     }
-    
-
 }
 
 
@@ -57,7 +51,6 @@ extension CategoryTableViewController {
         } catch {
             print("Error saving new category : \(error)")
         }
-        
         self.tableView.reloadData()
     }
     
@@ -93,6 +86,21 @@ extension CategoryTableViewController {
         
         return cell
   
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        performSegue(withIdentifier: Constants.goToItemSegue, sender: self)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        let destinationVC = segue.destination as! TodoListViewController
+        
+        if let indexPath = tableView.indexPathForSelectedRow {
+            
+            destinationVC.selectedCategory = categories[indexPath.row]
+            destinationVC.navigationItem.title = categories[indexPath.row].name
+        }
     }
     
     
