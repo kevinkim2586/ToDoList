@@ -6,5 +6,6 @@ target 'ToDoList' do
 
   # Pods for ToDoList
   pod 'RealmSwift', '=10.1.4'
+  pod 'SwipeCellKit'
   
 end

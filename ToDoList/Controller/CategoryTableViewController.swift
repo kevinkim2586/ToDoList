@@ -1,5 +1,6 @@
 import UIKit
 import RealmSwift
+import SwipeCellKit
 
 class CategoryTableViewController: UITableViewController {
     
@@ -7,10 +8,10 @@ class CategoryTableViewController: UITableViewController {
 
     var categories: Results<Category>?
     
-    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        tableView.rowHeight = 80.0
 
         loadCategories()
     }
@@ -74,7 +75,9 @@ extension CategoryTableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: Constants.categoryCellIdentifier, for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: Constants.categoryCellIdentifier, for: indexPath) as! SwipeTableViewCell
+        
+        cell.delegate = self
 
         cell.textLabel?.text = categories?[indexPath.row].name ?? "No Categories Added"
         
@@ -95,7 +98,7 @@ extension CategoryTableViewController {
             destinationVC.navigationItem.title = categories?[indexPath.row].name
         }
     }
-<<<<<<< HEAD
+
 }
 
 //MARK: - SwipeTableViewCellDelegate
@@ -107,19 +110,24 @@ extension CategoryTableViewController: SwipeTableViewCellDelegate {
         guard orientation == .right else { return nil }
 
         let deleteAction = SwipeAction(style: .destructive, title: "Delete") { action, indexPath in
-            // handle action by updating model with deletion
-            print("Item Deleted")
+            
+            if let categoryToDelete = self.categories?[indexPath.row] {
+                
+                do {
+                    try self.realm.write {
+                        self.realm.delete(categoryToDelete)
+                    }
+                } catch {
+                    print("Error in editActionsForRowAt : \(error)")
+                }
+                
+            }
         }
-
-        // customize the action appearance
         deleteAction.image = UIImage(named: "delete-icon")
-
         return [deleteAction]
     }
     
-=======
->>>>>>> parent of 59bbc00... Implement SwipeCellKit
-    
+
     
     
 }
