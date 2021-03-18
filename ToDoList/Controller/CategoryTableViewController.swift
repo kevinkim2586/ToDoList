@@ -13,8 +13,6 @@ class CategoryTableViewController: UITableViewController {
         super.viewDidLoad()
 
         loadCategories()
-        
-        tableView.rowHeight = 80.0
     }
     
     // To make a new category
@@ -109,20 +107,8 @@ extension CategoryTableViewController: SwipeTableViewCellDelegate {
         guard orientation == .right else { return nil }
 
         let deleteAction = SwipeAction(style: .destructive, title: "Delete") { action, indexPath in
-            
-            if let category = self.categories?[indexPath.row] {
-                
-                do {
-                    try self.realm.write {
-                        self.realm.delete(category)
-                    }
-                } catch {
-                    print("Error in editActionsForRowAt: \(error)")
-                }
-                
-            }
-            
-            tableView.reloadData()
+            // handle action by updating model with deletion
+            print("Item Deleted")
         }
 
         // customize the action appearance
