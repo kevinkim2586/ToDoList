@@ -1,5 +1,4 @@
 import UIKit
-import CoreData
 import RealmSwift
 
 class CategoryTableViewController: UITableViewController {
@@ -14,6 +13,8 @@ class CategoryTableViewController: UITableViewController {
         super.viewDidLoad()
 
         loadCategories()
+        
+        tableView.rowHeight = 80.0
     }
     
     // To make a new category
@@ -96,6 +97,42 @@ extension CategoryTableViewController {
             destinationVC.navigationItem.title = categories?[indexPath.row].name
         }
     }
+<<<<<<< HEAD
+}
+
+//MARK: - SwipeTableViewCellDelegate
+
+extension CategoryTableViewController: SwipeTableViewCellDelegate {
+    
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> [SwipeAction]? {
+        
+        guard orientation == .right else { return nil }
+
+        let deleteAction = SwipeAction(style: .destructive, title: "Delete") { action, indexPath in
+            
+            if let category = self.categories?[indexPath.row] {
+                
+                do {
+                    try self.realm.write {
+                        self.realm.delete(category)
+                    }
+                } catch {
+                    print("Error in editActionsForRowAt: \(error)")
+                }
+                
+            }
+            
+            tableView.reloadData()
+        }
+
+        // customize the action appearance
+        deleteAction.image = UIImage(named: "delete-icon")
+
+        return [deleteAction]
+    }
+    
+=======
+>>>>>>> parent of 59bbc00... Implement SwipeCellKit
     
     
     

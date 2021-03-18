@@ -18,7 +18,7 @@ class TodoListViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
     
-        //searchBar.delegate = self
+        searchBar.delegate = self
 
         print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask))
     }
@@ -40,6 +40,7 @@ class TodoListViewController: UITableViewController {
                         
                         newItem.title = textField.text!
                         newItem.isDone = false
+                        newItem.dateCreated = Date()
                         
                         currentCategory.items.append(newItem)
                     }
@@ -105,48 +106,31 @@ extension TodoListViewController {
             }
         }
         tableView.reloadData()
-        
         tableView.deselectRow(at: indexPath, animated: true)    // cell 을 누르자마자 deselect 되는 애니메이션이 나올 수 있도록
     }
 }
 
 //MARK: - UISearchBarDelegate
 
-//extension TodoListViewController: UISearchBarDelegate {
-//
-//    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-//
-//        let request: NSFetchRequest<Item> = Item.fetchRequest()
-//
-//
-//        // What do we want to get back from the database? Use NSPredicate
-//        // NSPredicate is basically a foundation class that specifies how data should be fetched/filtered. (query language)
-//        // %@ substitutes any sort of argument that you want to pass in
-//        // [cd] making it "case" and "diacritic" insensitive
-//
-//        let predicate = NSPredicate(format: "title CONTAINS[cd] %@", searchBar.text!)
-//
-//        // Why array? because .sortDescriptor"s" -> plural -> expects an array
-//        request.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true)]
-//
-//        loadItems(with: request, predicate: predicate)
-//    }
-//
-//    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-//
-//        if searchBar.text?.count == 0 {
-//            loadItems()
-//
-//            DispatchQueue.main.async {
-//                searchBar.resignFirstResponder()
-//            }
-//
-//        }
-//
-//
-//
-//    }
-//
-//
-//
-//}
+extension TodoListViewController: UISearchBarDelegate {
+
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        
+        todoItems = todoItems?.filter("title CONTAINS[cd] %@", searchBar.text!).sorted(byKeyPath: "dateCreated", ascending: true)
+        
+        tableView.reloadData()
+    }
+
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+
+        if searchBar.text?.count == 0 {
+            loadItems()
+
+            DispatchQueue.main.async {
+                searchBar.resignFirstResponder()
+            }
+
+        }
+
+    }
+}
