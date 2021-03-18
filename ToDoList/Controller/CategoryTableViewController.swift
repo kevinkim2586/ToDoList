@@ -6,7 +6,8 @@ class CategoryTableViewController: UITableViewController {
     
     let realm = try! Realm()
 
-    var categories = [Category]()
+    //var categories = [Category]()
+    var categories: Results<Category>!
     
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
@@ -26,11 +27,10 @@ class CategoryTableViewController: UITableViewController {
         
         let action = UIAlertAction(title: "Add Category", style: .default) { (action) in
         
-            let newCategory = Category(context: self.context)
+            let newCategory = Category()
             newCategory.name = textField.text!
-            
-            self.categories.append(newCategory)
-            self.saveCategory()
+
+            self.save(category: newCategory)
         }
         alert.addTextField { (alertTextField) in
             alertTextField.placeholder = "Category Name"
@@ -46,10 +46,14 @@ class CategoryTableViewController: UITableViewController {
 
 extension CategoryTableViewController {
     
-    func saveCategory() {
+    func save(category: Category) {
         
         do {
-            try context.save()
+            //try context.save()
+            try realm.write {
+                realm.add(category)
+                
+            }
         } catch {
             print("Error saving new category : \(error)")
         }
@@ -58,13 +62,15 @@ extension CategoryTableViewController {
     
     func loadCategories() {
         
-        let request: NSFetchRequest<Category> = Category.fetchRequest()
+        categories = realm.objects(Category.self)
         
-        do {
-            categories = try context.fetch(request)
-        } catch {
-            print("Error fetching category data : \(error)")
-        }
+//        let request: NSFetchRequest<Category> = Category.fetchRequest()
+//        
+//        do {
+//            categories = try context.fetch(request)
+//        } catch {
+//            print("Error fetching category data : \(error)")
+//        }
         tableView.reloadData()
     }
 }
