@@ -18,6 +18,7 @@
 ## Libraries/Frameworks Used
 - Realm
 - Chameleon
+- SwipeCellKit
 
 ## In Action
 
