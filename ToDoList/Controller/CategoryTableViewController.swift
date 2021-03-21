@@ -82,7 +82,6 @@ extension CategoryTableViewController {
 
 //MARK: - UITableViewDelegate, UITableViewDataSource
 
-
 extension CategoryTableViewController {
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -92,16 +91,11 @@ extension CategoryTableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = super.tableView(tableView, cellForRowAt: indexPath)
-
+    
         cell.textLabel?.text = categories?[indexPath.row].name ?? "No Categories Added"
         
-        
-        
-        let cellColor = categories?[indexPath.row].cellColorHexValue ?? "000000"
-        
+        let cellColor = categories?[indexPath.row].cellColorHexValue ?? "BDD4CC"
         cell.backgroundColor = UIColor(hexString: cellColor)
-  
-
         
         return cell
     }
@@ -117,7 +111,12 @@ extension CategoryTableViewController {
         if let indexPath = tableView.indexPathForSelectedRow {
             
             destinationVC.selectedCategory = categories?[indexPath.row]
+            
+            let colorScheme = categories?[indexPath.row].cellColorHexValue ?? "BDD4CC"
+            destinationVC.colorScheme = UIColor(hexString: colorScheme) ?? UIColor.white
+            
             destinationVC.navigationItem.title = categories?[indexPath.row].name
+            
         }
     }
 
