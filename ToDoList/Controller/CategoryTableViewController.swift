@@ -25,6 +25,7 @@ class CategoryTableViewController: SwipeTableViewController {
         
             let newCategory = Category()
             newCategory.name = textField.text!
+            newCategory.cellColorHexValue = UIColor.randomFlat().hexValue()
 
             self.save(category: newCategory)
         }
@@ -94,9 +95,13 @@ extension CategoryTableViewController {
 
         cell.textLabel?.text = categories?[indexPath.row].name ?? "No Categories Added"
         
-        cell.backgroundColor = UIColor.randomFlat().hexValue()
+        
+        
+        let cellColor = categories?[indexPath.row].cellColorHexValue ?? "000000"
+        
+        cell.backgroundColor = UIColor(hexString: cellColor)
   
-        // UIColor(hexString: String)
+
         
         return cell
     }
