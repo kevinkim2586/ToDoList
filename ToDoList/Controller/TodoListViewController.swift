@@ -23,8 +23,31 @@ class TodoListViewController: SwipeTableViewController {
         super.viewDidLoad()
     
         searchBar.delegate = self
+        
 
         print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask))
+    }
+    
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        guard let navBar = navigationController?.navigationBar else {
+            fatalError("Navigation Controller does not exist")
+        }
+   
+        navBar.backgroundColor = colorScheme
+        navBar.tintColor = ContrastColorOf(colorScheme, returnFlat: true)
+        
+        // Large Title 속성으로 되어 있는 경우 largeTitleTextAttributes
+        navBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor : ContrastColorOf(colorScheme, returnFlat: true)]
+
+        searchBar.barTintColor = colorScheme
+       
+
+        let navBarColor = UINavigationBarAppearance()
+        navBarColor.backgroundColor = colorScheme
+        navBar.scrollEdgeAppearance = navBarColor
     }
 
     @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {

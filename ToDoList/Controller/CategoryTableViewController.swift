@@ -13,6 +13,18 @@ class CategoryTableViewController: SwipeTableViewController {
         loadCategories()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        
+        guard let navBar = navigationController?.navigationBar else {
+            fatalError("Navigation Controller does not exist")
+        }
+        navBar.backgroundColor = UIColor(hexString: "1D9BF6")
+        
+        let navBarColor = UINavigationBarAppearance()
+        navBarColor.backgroundColor = FlatRed()
+        navBar.scrollEdgeAppearance = navBarColor
+    }
+    
     // Add a New Category
 
     @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
@@ -96,6 +108,7 @@ extension CategoryTableViewController {
         
         let cellColor = categories?[indexPath.row].cellColorHexValue ?? "BDD4CC"
         cell.backgroundColor = UIColor(hexString: cellColor)
+        cell.textLabel?.textColor = ContrastColorOf(UIColor(hexString: cellColor)!, returnFlat: true)
         
         return cell
     }
@@ -116,7 +129,6 @@ extension CategoryTableViewController {
             destinationVC.colorScheme = UIColor(hexString: colorScheme) ?? UIColor.white
             
             destinationVC.navigationItem.title = categories?[indexPath.row].name
-            
         }
     }
 
