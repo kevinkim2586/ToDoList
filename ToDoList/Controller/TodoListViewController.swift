@@ -1,7 +1,7 @@
 import UIKit
 import RealmSwift
 
-class TodoListViewController: UITableViewController {
+class TodoListViewController: SwipeTableViewController {
     
     @IBOutlet weak var searchBar: UISearchBar!
 
@@ -15,6 +15,7 @@ class TodoListViewController: UITableViewController {
             loadItems()
         }
     }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     
@@ -62,8 +63,39 @@ class TodoListViewController: UITableViewController {
     func loadItems() {
 
         todoItems = selectedCategory?.items.sorted(byKeyPath: "title", ascending: true)
-        
         tableView.reloadData()
+    }
+    
+    override func markComplete(at indexPath: IndexPath) {
+        
+        if let item = todoItems?[indexPath.row] {
+            
+            do {
+                try realm.write {
+                    item.isDone = !item.isDone
+                }
+            } catch {
+                print("Error in didSelectRowAt : \(error)")
+            }
+        }
+        tableView.reloadData()
+        tableView.deselectRow(at: indexPath, animated: true)    // cell 을 누르자마자 deselect 되는 애니메이션이 나올 수 있도록
+    }
+    
+    override func updateModel(at indexPath: IndexPath) {
+        
+        
+        if let taskToDelete = self.todoItems?[indexPath.row] {
+            
+            do {
+                
+                try self.realm.write {
+                    self.realm.delete(taskToDelete)
+                }
+            } catch {
+                print("Error deleting task: \(error)")
+            }
+        }
     }
 }
 
@@ -77,8 +109,8 @@ extension TodoListViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: Constants.toDoItemCellIdentifier, for: indexPath)
-        
+        let cell = super.tableView(tableView, cellForRowAt: indexPath)
+    
         if let item = todoItems?[indexPath.row] {
             cell.textLabel?.text = item.title
             cell.accessoryType = item.isDone ? .checkmark : .none
@@ -89,25 +121,6 @@ extension TodoListViewController {
         return cell
     }
     
-    //MARK: - UITableView Delegate Methods
-    
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        if let item = todoItems?[indexPath.row] {
-            
-            do {
-                try realm.write {
-                    
-                    //realm.delete(item)
-                    item.isDone = !item.isDone
-                }
-            } catch {
-                print("Error in didSelectRowAt : \(error)")
-            }
-        }
-        tableView.reloadData()
-        tableView.deselectRow(at: indexPath, animated: true)    // cell 을 누르자마자 deselect 되는 애니메이션이 나올 수 있도록
-    }
 }
 
 //MARK: - UISearchBarDelegate
@@ -131,6 +144,5 @@ extension TodoListViewController: UISearchBarDelegate {
             }
 
         }
-
     }
 }
