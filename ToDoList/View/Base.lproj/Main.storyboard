@@ -75,7 +75,7 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="Todo" id="2VJ-PT-cvt">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="xpF-8E-umk">
-                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <connections>
                                 <action selector="addButtonPressed:" destination="51h-ao-oNL" id="ty5-2N-mFa"/>
                             </connections>

@@ -18,10 +18,11 @@ class CategoryTableViewController: SwipeTableViewController {
         guard let navBar = navigationController?.navigationBar else {
             fatalError("Navigation Controller does not exist")
         }
-        navBar.backgroundColor = UIColor(hexString: "1D9BF6")
+        navBar.backgroundColor = .white
+
         
         let navBarColor = UINavigationBarAppearance()
-        navBarColor.backgroundColor = FlatRed()
+        navBarColor.backgroundColor = .white
         navBar.scrollEdgeAppearance = navBarColor
     }
     
@@ -115,6 +116,8 @@ extension CategoryTableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         performSegue(withIdentifier: Constants.goToItemSegue, sender: self)
+        tableView.deselectRow(at: indexPath, animated: true)
+        
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
